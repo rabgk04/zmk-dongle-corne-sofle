@@ -5,6 +5,7 @@
  */
 
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1200
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 80
 #include <dt-bindings/zmk/pointing.h>
 
 #define SLOW_MOVE_UP MOVE_Y(-300)
@@ -22,6 +23,7 @@
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
             bindings = <&msc>, <&msc>;
+            tap-ms = <25>;
         };
     };
 

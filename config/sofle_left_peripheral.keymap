@@ -4,8 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 800
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200
 #include <dt-bindings/zmk/pointing.h>
+
+#define SLOW_MOVE_UP MOVE_Y(-300)
+#define SLOW_MOVE_DOWN MOVE_Y(300)
+#define SLOW_MOVE_LEFT MOVE_X(-300)
+#define SLOW_MOVE_RIGHT MOVE_X(300)
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
@@ -98,20 +104,26 @@
         mouse_layer {
             display-name = "MOU";
 
-            // ------------------------------------------------------------------------------------------------------------
-            // |       |     |     |     |     |     |                   |     | M1  |  ^  | M2  | M3  |     |
-            // |       |     |     |     |     |     |                   |     |     |     |     |     |     |
-            // |       |     |     |     |     |     |                   |     |  <  |  v  |  >  |     |     |
-            // |       |     |     |     |     |     |     |  |          |     |     |     |     |     |     |
-            //               |     |     |     |     |     |  |     | M1  | UNL |     |     |     |
-            //                                                Encoder: scroll up/down
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                            &trans  &trans     &trans         &trans  &trans  &trans
+&trans  &mkp MB1  &mkp MB2  &mkp MB3  &trans  &trans                            &trans  &trans     &mmv MOVE_UP    &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                            &trans  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &trans  &trans
+&mo 4   &trans  &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans     &trans         &trans  &trans  &trans
+                   &trans  &trans  &trans  &trans  &trans            &trans  &tog 3   &trans         &trans  &trans
+            >;
+
+            sensor-bindings = <&mouse_enc SCRL_UP SCRL_DOWN &mouse_enc SCRL_UP SCRL_DOWN>;
+        };
+
+        slow_mouse_layer {
+            display-name = "SLOW";
 
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                            &trans  &mkp MB1  &mmv MOVE_UP    &mkp MB2  &mkp MB3  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                            &trans  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
-                   &trans  &trans  &trans  &trans  &trans            &mkp MB1  &tog 3  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                            &trans  &trans     &trans                 &trans  &trans  &trans
+&trans  &mkp MB1  &mkp MB2  &mkp MB3  &trans  &trans                            &trans  &trans     &mmv SLOW_MOVE_UP    &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                            &trans  &mmv SLOW_MOVE_LEFT  &mmv SLOW_MOVE_DOWN  &mmv SLOW_MOVE_RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans     &trans                 &trans  &trans  &trans
+                   &trans  &trans  &trans  &trans  &trans            &trans  &tog 3   &trans                 &trans  &trans
             >;
 
             sensor-bindings = <&mouse_enc SCRL_UP SCRL_DOWN &mouse_enc SCRL_UP SCRL_DOWN>;

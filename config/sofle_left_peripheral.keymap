@@ -114,7 +114,7 @@
                    &trans  &trans  &trans  &trans  &trans            &mkp MB1  &tog 3  &trans  &trans  &trans
             >;
 
-            sensor-bindings = <&mouse_enc SCRL_UP SCRL_DN &mouse_enc SCRL_UP SCRL_DN>;
+            sensor-bindings = <&mouse_enc SCRL_UP SCRL_DOWN &mouse_enc SCRL_UP SCRL_DOWN>;
         };
     };
 };
